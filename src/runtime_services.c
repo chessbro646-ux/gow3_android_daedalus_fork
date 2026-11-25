@@ -304,6 +304,9 @@ static ABI int32_t save_open(const unsigned char *p) {
     if (!dialogs[2].initialized) return DIALOG_NOT_INITIALIZED;
     memset(&save_dialog,0,sizeof(save_dialog));
     memcpy(&save_dialog.mode,p+52,4);
+    uint32_t dialog_type;
+    memcpy(&dialog_type,p+56,4);
+    printf("Runtime: SaveDataDialog request mode=%u type=%u\n", (unsigned)save_dialog.mode, (unsigned)dialog_type);
     memcpy(&save_dialog.user_data,p+112,8);
     const unsigned char *items; memcpy(&items,p+72,8);
     if (items) {
