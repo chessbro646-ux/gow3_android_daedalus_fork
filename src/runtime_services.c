@@ -312,6 +312,7 @@ static ABI int32_t save_open(const unsigned char *p) {
         for (int j=80;j<112;j++) printf(" %02x",p[j]);
         printf("\n");
         fflush(stdout);
+        { const unsigned char *ec; memcpy(&ec,p+96,8); printf("Runtime: SaveDataDialog mode4 ptr96=%p\n",(const void*)ec); fflush(stdout); if (ec) { printf("Runtime: SaveDataDialog mode4 ptr96 bytes:"); for (int j=0;j<16;j++) printf(" %02x",ec[j]); printf("\n"); fflush(stdout); } }
     }
     memcpy(&save_dialog.user_data,p+112,8);
     const unsigned char *items; memcpy(&items,p+72,8);
