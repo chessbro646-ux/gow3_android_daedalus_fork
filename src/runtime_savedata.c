@@ -172,11 +172,17 @@ static int32_t mount(int32_t user, const char *title, const DirName *dir, uint32
 }
 static ABI int32_t save_mount(const Mount1 *m, MountResult *result) {
     if (!m) return ERR_PARAMETER;
-    return mount(m->user,m->title ? m->title->data : NULL,m->dir,m->mode,result);
+    int32_t rc=mount(m->user,m->title ? m->title->data : NULL,m->dir,m->mode,result);
+    printf("Runtime: save mount api=Mount user=%d dir=%.32s mode=0x%08x blocks=%llu rc=0x%08x\n",
+           m->user,m->dir ? m->dir->data : "<null>",(unsigned)m->mode,(unsigned long long)m->blocks,(unsigned)rc);
+    return rc;
 }
 static ABI int32_t save_mount2(const Mount2 *m, MountResult *result) {
     if (!m) return ERR_PARAMETER;
-    return mount(m->user,NULL,m->dir,m->mode,result);
+    int32_t rc=mount(m->user,NULL,m->dir,m->mode,result);
+    printf("Runtime: save mount api=Mount2 user=%d dir=%.32s mode=0x%08x blocks=%llu rc=0x%08x\n",
+           m->user,m->dir ? m->dir->data : "<null>",(unsigned)m->mode,(unsigned long long)m->blocks,(unsigned)rc);
+    return rc;
 }
 static int slot_of(const MountPoint *point) {
     if (!point || strncmp(point->data,"/savedata",9)) return -1;

@@ -307,6 +307,12 @@ static ABI int32_t save_open(const unsigned char *p) {
     uint32_t dialog_type;
     memcpy(&dialog_type,p+56,4);
     printf("Runtime: SaveDataDialog request mode=%u type=%u\n", (unsigned)save_dialog.mode, (unsigned)dialog_type);
+    if (save_dialog.mode==4) {
+        printf("Runtime: SaveDataDialog mode4 raw +80..+111:");
+        for (int j=80;j<112;j++) printf(" %02x",p[j]);
+        printf("\n");
+        fflush(stdout);
+    }
     memcpy(&save_dialog.user_data,p+112,8);
     const unsigned char *items; memcpy(&items,p+72,8);
     if (items) {
